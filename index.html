@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width,initial-scale=1.0'>
+        <title>Rock Paper Scissors</title>
+    </head>
+    <body>
+        <script>
+            function computerPlay() {
+                let options = ['rock', 'paper', 'scissors'];
+                function random(array) {
+                    let indexChoice = Math.floor(Math.random() * array.length);
+                    return array[indexChoice];
+                }
+                let choice = random(options);
+                return choice;
+            }
+
+            function isSupported(playerSelection) {
+                if (playerSelection != 'rock' && playerSelection != 'paper' && playerSelection && 'scissors') {
+                    return 'Please enter rock, paper, or scissors.';
+                }
+            }
+
+            function playRound(playerSelection, computerSelection) {
+                // convert playerSelection to lowercase
+                // trim player seelection
+                let player = playerSelection.toLowerCase().trim();
+                // if player selection isnt valid return you need to choose rock paper or scissors
+                isSupported(player);
+                // conver computer selection to lowercase
+                let computer = computerSelection.toLowerCase();
+                // if they're equal, return tie
+                if (player == computer) {
+                    return "It's a tie!"
+                }
+                switch (player) {
+                // if player chose rock, computer chose paper, return you lost paper beats rock
+                //                          computer chose paper, you win
+                    case 'rock':
+                        if (computer == 'paper') {
+                            return 'You lost! Paper beats rock.';
+                        } else {
+                            return 'You won! Rock beats scissors.';
+                        }
+                    break;
+                // if player chose paper, computer chose rock, return you win
+                //                          computer chose scissors, return you lost
+                    case 'paper':
+                        if (computer == 'scissors') {
+                            return "You lost! Scissors beats paper.";
+                        } else {
+                            return "You won! Paper beats rock."
+                        }
+                    break;
+
+                // if player chose scissors, computer chose rock, return you lose
+                //                          computer chose paper, return you win 
+                    case 'scissors':
+                        if (computer == 'rock') {
+                            return "You lost! Rock beats scissors.";
+                        } else {
+                            return "You won! Scissors beats paper";
+                        }
+                    break;
+                    
+                // default error
+                    default: 
+                        return 'error'
+                }
+            }
+            
+
+
+            function game() {
+                let roundResult;
+                let computerScore = 0;
+                let playerScore = 0;
+                alert("Let's play rock, paper, scissors!");
+                // play 5 rounds with user selection and computerPlay, console log results and score after each round
+                for (let i = 0; i < 5; i++) {
+                    playerSelection = prompt("Please enter your selection");
+                    roundResult = playRound(playerSelection, computerPlay());
+                    alert(roundResult);
+                    let scoreDetermine = roundResult.split('');
+
+                    if (scoreDetermine[4] == 'w') {
+                        playerScore++;
+                    } else if (scoreDetermine[4] == 'l'){
+                        computerScore++;
+                    }
+                    alert('Round ' + (i + 1) +' score: You: ' + playerScore + ' Computer: ' + computerScore)
+                }
+                alert(`Final Score:\nComputer: ${computerScore}\nYou: ${playerScore}`)
+
+                if (playerScore > computerScore) {
+                    alert('You win!');
+                } else if (playerScore < computerScore){
+                    alert('You lose.');
+                } else {
+                    alert("It's a tie.")
+                }
+            }
+
+        </script>
+    </body>
+</html>
